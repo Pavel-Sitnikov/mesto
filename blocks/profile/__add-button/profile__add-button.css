@@ -1,0 +1,10 @@
+.profile__add-button {
+  width: 150px;
+  height: 50px;
+  background: transparent url(../../../images/profile/addButton.svg) center
+    no-repeat;
+  padding: 0;
+  margin: 0;
+  border: solid 2px #fff;
+  cursor: pointer;
+}
