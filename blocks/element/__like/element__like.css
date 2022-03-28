@@ -1,0 +1,9 @@
+.element__like {
+  width: 22px;
+  height: 19px;
+  background: transparent url(../../../images/elements/Vector.svg) center
+    no-repeat;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
