@@ -8,3 +8,11 @@
   border: solid 2px #fff;
   cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+  .profile__add-button {
+    width: 100%;
+    max-width: 282px;
+    margin-top: 32px;
+  }
+}

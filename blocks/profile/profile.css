@@ -8,3 +8,17 @@
   margin: 0 auto;
   color: #fff;
 }
+
+@media screen and (max-width: 932px) {
+  .profile {
+    width: 88%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profile {
+    width: auto;
+    flex-direction: column;
+    margin: 0 19px;
+  }
+}
