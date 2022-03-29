@@ -1,5 +1,5 @@
 .popup__send {
-  width: 358px;
+  width: 100%;
   height: 50px;
   background: url(../../../images/popup/Submit\ Button.svg) center no-repeat;
   border: none;
