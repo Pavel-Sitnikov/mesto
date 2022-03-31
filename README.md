@@ -16,7 +16,7 @@
 
 ## Ссылка на сайт (GitHub)
 
--
+https://pavel-sitnikov.github.io/mesto/index.html
 
 ## Будущие дорабоки
 
