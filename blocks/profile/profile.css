@@ -19,6 +19,7 @@
   .profile {
     width: auto;
     flex-direction: column;
+    padding: 46px 0 0;
     margin: 0 19px;
   }
 }

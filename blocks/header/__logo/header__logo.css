@@ -1,6 +1,5 @@
 .header__logo {
   width: 142px;
-  display: inline;
 }
 
 @media screen and (max-width: 932px) {

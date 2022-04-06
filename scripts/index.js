@@ -1,34 +1,31 @@
-// popup open/close
-let editing = document.querySelector(".profile__edit-button");
-let modalWindow = document.querySelector(".popup");
-let modalCloseBtn = modalWindow.querySelector(".popup__close");
+let editingBtn = document.querySelector('.profile__edit-button');
+let modalWindow = document.querySelector('.popup');
+let modalCloseBtn = modalWindow.querySelector('.popup__close');
+let formElement = document.getElementById('popup_form');
+let nameInput = formElement.querySelector('.popup__input_name');
+let jobInput = formElement.querySelector('.popup__input_description');
+let profileName = document.querySelector('.profile__name');
+let profileDescription = document.querySelector('.profile__description');
 
-function toggleModalWindow() {
-  modalWindow.classList.toggle("popup_opened");
+function openModalWindow() {
+  modalWindow.classList.add('popup_opened');
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
 }
 
-editing.addEventListener("click", toggleModalWindow);
+function closeModalWindow() {
+  modalWindow.classList.remove('popup_opened');
+}
 
-modalCloseBtn.addEventListener("click", toggleModalWindow);
-
-// popup profile changes
-
-let formElement = document.querySelector(".popup__container");
-let nameInput = formElement.querySelector(".popup__name");
-let jobInput = formElement.querySelector(".popup__description");
-let profileName = document.querySelector(".profile__name");
-let profileDescription = document.querySelector(".profile__description");
-let sendBtn = document.querySelector(".popup__send");
-
-function formSubmitHandler(evt) {
+function saveFormSubmitHandler(evt) {
   evt.preventDefault();
 
   profileName.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
 
-  toggleModalWindow();
+  closeModalWindow();
 }
 
-sendBtn.addEventListener("click", formSubmitHandler);
+editingBtn.addEventListener('click', openModalWindow);
+modalCloseBtn.addEventListener('click', closeModalWindow);
+formElement.addEventListener('submit', saveFormSubmitHandler);

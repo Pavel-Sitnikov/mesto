@@ -1,14 +1,21 @@
 .popup__send {
   width: 100%;
   height: 50px;
-  background: url(../../../images/popup/Submit\ Button.svg) center no-repeat;
+  background: url(../../../images/popup/Submit_Button.svg) center no-repeat;
   border: none;
   padding: 0;
   cursor: pointer;
-  margin-top: 48px;
+  margin-top: 47px;
   transition: 0.3s ease-in;
 }
 
 .popup__send:hover {
   opacity: 0.8;
+}
+
+@media screen and (max-width: 482px) {
+.popup__send {
+  background: url(../../../images/popup/Submit_Button_mini.svg) center no-repeat;
+  margin: 43px 0 10px;
+}
 }
