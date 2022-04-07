@@ -2,9 +2,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
   max-width: 430px;
   padding: 34px 36px 33px;
-  margin: 195px auto;
+  margin: 0 auto;
   background-color: #fff;
   position: relative;
   box-sizing: border-box;
@@ -15,6 +16,6 @@
 @media screen and (max-width: 482px) {
   .popup__container {
     padding: 26px 22px 13px;
-    margin: 123px 19px;
+    margin: 0 19px;
   }
 }
