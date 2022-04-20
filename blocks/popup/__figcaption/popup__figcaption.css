@@ -3,6 +3,7 @@
   font-weight: 400;
   line-height: 1.21;
 	color: #fff;
+  flex-shrink: 0;
 	margin-top: 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
