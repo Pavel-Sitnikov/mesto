@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
     <link rel="stylesheet" href="pages/index.css" />
+    <script defer src="scripts/cards.js"></script>
     <script defer src="scripts/index.js"></script>
   </head>
   <body class="page">
@@ -39,8 +40,8 @@
         <button class="popup__close" type="button"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
         <form id="popup_form_eddit" name="popup_form_eddit">
-          <input class="popup__input popup__input_enter_name" name="name" required value=""/>
-          <input class="popup__input popup__input_enter_description" name="description" value=""/>
+          <input class="popup__input popup__input_enter_name" placeholder="Имя" name="name" required value=""/>
+          <input class="popup__input popup__input_enter_description" placeholder="Профессия" name="description" value=""/>
           <button type="submit" class="popup__send"></button>
         </form>
       </div>
