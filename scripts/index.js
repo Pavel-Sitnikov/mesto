@@ -85,9 +85,7 @@ function like(evt) {
 function handleAddElement(evt) {
   evt.preventDefault();
 
-  inputTitleElement.velue;
-  inputLinkElement.velue;
-  const element = createElement({name: inputTitleElement, link: inputLinkElement});
+  const element = createElement({name: inputTitleElement.value, link: inputLinkElement.value});
   
   formAddPopup.reset();
   listContainer.prepend(element);
