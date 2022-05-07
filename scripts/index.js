@@ -1,5 +1,5 @@
-const editingBtn = document.querySelector(".profile__edit-button");
-const addCardBtn = document.querySelector(".profile__add-button");
+const btnEditingProfile = document.querySelector(".profile__edit-button");
+const btnAddCard = document.querySelector(".profile__add-button");
 
 const modalWindowProfile = document.querySelector(
   ".popup_action_profile-change"
@@ -31,6 +31,8 @@ const inputTitleElement = formAddPopup.querySelector(
 );
 const inputLinkElement = formAddPopup.querySelector(".popup__input_enter_link");
 
+const btnAddCardSave = modalWindowNewPlace.querySelector(".popup__button");
+
 function openModalWindow(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener("keydown", closePopupEsc);
@@ -51,8 +53,9 @@ function saveFormSubmitHandler(evt) {
 }
 
 function render() {
-  const cards = initialCards.map(createElement);
-  listContainer.append(...cards);
+  initialCards.forEach((card) => {
+    listContainer.append(createElement(card));
+  });
 }
 
 function createElement(item) {
@@ -105,22 +108,21 @@ function handleAddElement(evt) {
 }
 
 function closeOverlay(evt) {
-  const popupOpened = document.querySelector(".popup_opened");
   if (evt.target === evt.currentTarget) {
-    closeModalWindow(popupOpened);
+    closeModalWindow(event.target);
   }
 }
 
 function closePopupEsc(evt) {
-  const popupOpened = document.querySelector(".popup_opened");
   if (evt.key === "Escape") {
+    const popupOpened = document.querySelector(".popup_opened");
     closeModalWindow(popupOpened);
   }
 }
 
 render();
 
-editingBtn.addEventListener("click", () => {
+btnEditingProfile.addEventListener("click", () => {
   openModalWindow(modalWindowProfile);
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
@@ -128,9 +130,11 @@ editingBtn.addEventListener("click", () => {
 modalCloseProfileBtn.addEventListener("click", () =>
   closeModalWindow(modalWindowProfile)
 );
-addCardBtn.addEventListener("click", () =>
-  openModalWindow(modalWindowNewPlace)
-);
+btnAddCard.addEventListener("click", () => {
+  disableSubmitButton(btnAddCardSave, config.inactiveButtonClass);
+  openModalWindow(modalWindowNewPlace);
+});
+
 modalCloseNewPlaceBtn.addEventListener("click", () =>
   closeModalWindow(modalWindowNewPlace)
 );
