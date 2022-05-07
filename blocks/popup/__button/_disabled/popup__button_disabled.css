@@ -1,0 +1,4 @@
+.popup__button_disabled {
+  background: url(../../../../images/popup/button_disabled.svg) center no-repeat;
+  cursor: default;
+}
