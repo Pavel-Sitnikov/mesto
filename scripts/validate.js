@@ -7,6 +7,8 @@ const config = {
   errorClass: "popup__error_visible",
 };
 
+export class Validate {}
+
 const showInputError = (inputElement, config) => {
   const errorElement = document.querySelector(`.${inputElement.id}-error`);
 

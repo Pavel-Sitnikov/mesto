@@ -1,3 +1,6 @@
+import { Card } from "./Card.js";
+import { initialCards } from "./cards.js";
+
 const btnEditingProfile = document.querySelector(".profile__edit-button");
 const btnAddCard = document.querySelector(".profile__add-button");
 
@@ -24,7 +27,7 @@ const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 
 const listContainer = document.querySelector(".elements__list");
-const cardTemplate = document.getElementById("card-template");
+const cardTemplate = document.querySelector("#card-template");
 
 const inputTitleElement = formAddPopup.querySelector(
   ".popup__input_enter_title"
@@ -52,47 +55,48 @@ function saveFormSubmitHandler(evt) {
   closeModalWindow(modalWindowProfile);
 }
 
-function render() {
-  initialCards.forEach((card) => {
-    listContainer.append(createElement(card));
-  });
-}
+// function render() {
+//   initialCards.forEach((card) => {
+//     listContainer.append(createElement(card));
+//   });
+// }
 
-function createElement(item) {
-  const elementTemplate = cardTemplate.content.cloneNode(true);
-  const imgElement = elementTemplate.querySelector(".element__image");
-  const removeImgBtn = elementTemplate.querySelector(".element__delete");
-  const likeBtn = elementTemplate.querySelector(".element__like");
+// ------------------------------
+// function createElement(item) {
+//   const elementTemplate = cardTemplate.content.cloneNode(true);
+//   const imgElement = elementTemplate.querySelector(".element__image");
+//   const removeImgBtn = elementTemplate.querySelector(".element__delete");
+//   const likeBtn = elementTemplate.querySelector(".element__like");
 
-  const popupImg = modalWindowCard.querySelector(".popup__image");
-  const popupFigcaption = modalWindowCard.querySelector(".popup__figcaption");
+//   const popupImg = modalWindowCard.querySelector(".popup__image");
+//   const popupFigcaption = modalWindowCard.querySelector(".popup__figcaption");
 
-  function openCardPopup() {
-    openModalWindow(modalWindowCard);
-    popupImg.src = item.link;
-    popupImg.alt = item.name;
-    popupFigcaption.textContent = item.name;
-  }
+//   function openCardPopup() {
+//     openModalWindow(modalWindowCard);
+//     popupImg.src = item.link;
+//     popupImg.alt = item.name;
+//     popupFigcaption.textContent = item.name;
+//   }
 
-  imgElement.src = item.link;
-  imgElement.alt = item.name;
+//   imgElement.src = item.link;
+//   imgElement.alt = item.name;
 
-  elementTemplate.querySelector(".element__title").textContent = item.name;
-  imgElement.addEventListener("click", openCardPopup);
-  removeImgBtn.addEventListener("click", removeElement);
-  likeBtn.addEventListener("click", like);
+//   elementTemplate.querySelector(".element__title").textContent = item.name;
+//   imgElement.addEventListener("click", openCardPopup);
+//   removeImgBtn.addEventListener("click", removeElement);
+//   likeBtn.addEventListener("click", like);
 
-  return elementTemplate;
-}
+//   return elementTemplate;
+// }
 
-function removeElement(evt) {
-  const element = evt.target.closest(".element");
-  element.remove();
-}
+// function removeElement(evt) {
+//   const element = evt.target.closest(".element");
+//   element.remove();
+// }
 
-function like(evt) {
-  evt.target.classList.toggle("element__like_active");
-}
+// function like(evt) {
+//   evt.target.classList.toggle("element__like_active");
+// }
 
 function handleAddElement(evt) {
   evt.preventDefault();
@@ -120,7 +124,14 @@ function closePopupEsc(evt) {
   }
 }
 
-render();
+initialCards.forEach((item) => {
+  const card = new Card(item, "#card-template");
+  const cardElement = card.generateCard();
+
+  document.querySelector(".elements__list").append(cardElement);
+});
+
+// render();
 
 btnEditingProfile.addEventListener("click", () => {
   openModalWindow(modalWindowProfile);
