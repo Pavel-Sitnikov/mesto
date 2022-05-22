@@ -1,7 +1,8 @@
 import { initialCards } from "./cards.js";
 import { Card } from "./Card.js";
-import { Validate } from "./Validate.js";
+import { FormValidator } from "./FormValidator.js";
 
+const popups = document.querySelectorAll(".popup");
 const modalWindowProfile = document.querySelector(
   ".popup_action_profile-change"
 );
@@ -10,11 +11,6 @@ const modalWindowCard = document.querySelector(".popup_action_open-card");
 
 const btnEditingProfile = document.querySelector(".profile__edit-button");
 const btnAddCard = document.querySelector(".profile__add-button");
-
-const modalCloseProfileBtn = modalWindowProfile.querySelector(".popup__close");
-const modalCloseNewPlaceBtn =
-  modalWindowNewPlace.querySelector(".popup__close");
-const modalCloseCardBtn = modalWindowCard.querySelector(".popup__close");
 
 const formEditPopup = document.getElementById("popup_form_eddit");
 const formAddPopup = document.getElementById("popup_form_add");
@@ -44,10 +40,10 @@ const config = {
   errorClass: "popup__error_visible",
 };
 
-const formEditValidator = new Validate(config, formEditPopup);
+const formEditValidator = new FormValidator(config, formEditPopup);
 formEditValidator.enableValidation();
 
-const formAddValidator = new Validate(config, formAddPopup);
+const formAddValidator = new FormValidator(config, formAddPopup);
 formAddValidator.enableValidation();
 
 function openModalWindow(popup) {
@@ -60,7 +56,7 @@ function closeModalWindow(popup) {
   document.removeEventListener("keydown", closePopupEsc);
 }
 
-function saveFormSubmitHandler(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
 
   profileName.textContent = nameInput.value;
@@ -94,16 +90,20 @@ function handleAddElement(evt) {
     link: inputLinkElement.value,
   });
 
-  formAddPopup.reset();
   listContainer.prepend(element);
   closeModalWindow(modalWindowNewPlace);
 }
 
-function closeOverlay(evt) {
-  if (evt.target === evt.currentTarget) {
-    closeModalWindow(event.target);
-  }
-}
+popups.forEach((popup) => {
+  popup.addEventListener("mousedown", (evt) => {
+    if (evt.target.classList.contains("popup_opened")) {
+      closeModalWindow(popup);
+    }
+    if (evt.target.classList.contains("popup__close")) {
+      closeModalWindow(popup);
+    }
+  });
+});
 
 function closePopupEsc(evt) {
   if (evt.key === "Escape") {
@@ -116,25 +116,14 @@ btnEditingProfile.addEventListener("click", () => {
   openModalWindow(modalWindowProfile);
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
+  formEditValidator.resetValidation();
 });
-modalCloseProfileBtn.addEventListener("click", () =>
-  closeModalWindow(modalWindowProfile)
-);
+
 btnAddCard.addEventListener("click", () => {
   openModalWindow(modalWindowNewPlace);
-  formAddValidator.disableSubmitButton();
+  formAddPopup.reset();
+  formAddValidator.resetValidation();
 });
 
-modalCloseNewPlaceBtn.addEventListener("click", () =>
-  closeModalWindow(modalWindowNewPlace)
-);
-modalCloseCardBtn.addEventListener("click", () =>
-  closeModalWindow(modalWindowCard)
-);
-
-formEditPopup.addEventListener("submit", saveFormSubmitHandler);
+formEditPopup.addEventListener("submit", handleProfileFormSubmit);
 formAddPopup.addEventListener("submit", handleAddElement);
-
-modalWindowProfile.addEventListener("mousedown", closeOverlay);
-modalWindowNewPlace.addEventListener("mousedown", closeOverlay);
-modalWindowCard.addEventListener("mousedown", closeOverlay);

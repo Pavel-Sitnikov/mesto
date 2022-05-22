@@ -31,6 +31,7 @@ export class Card {
     this._btnRemoveCard = this._element.querySelector(".element__delete");
     this._btnToggleLike = this._element.querySelector(".element__like");
     this._imgCard = this._element.querySelector(".element__image");
+    this._titleCard = this._element.querySelector(".element__title");
 
     this._btnRemoveCard.addEventListener("click", () => {
       this._removeCard();
@@ -43,10 +44,10 @@ export class Card {
 
   generateCard() {
     this._element = this._getTemplate();
-    this._element.querySelector(".element__image").src = this._link;
-    this._element.querySelector(".element__image").alt = this._name;
-    this._element.querySelector(".element__title").textContent = this._name;
     this._setEventsListeners();
+    this._imgCard.src = this._link;
+    this._imgCard.alt = this._name;
+    this._titleCard.textContent = this._name;
 
     return this._element;
   }

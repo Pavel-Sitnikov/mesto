@@ -1,4 +1,4 @@
-export class Validate {
+export class FormValidator {
   constructor(config, formElement) {
     this._inputSelector = config.inputSelector;
     this._submitButtonSelector = config.submitButtonSelector;
@@ -55,6 +55,13 @@ export class Validate {
     this._buttonElement.classList.remove(this._inactiveButtonClass);
     this._buttonElement.removeAttribute("disabled");
   };
+
+  resetValidation() {
+    this._toggleButton();
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+    });
+  }
 
   _isValid = (inputElement) => {
     if (!inputElement.validity.valid) {
