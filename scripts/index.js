@@ -1,6 +1,7 @@
-import { initialCards } from "./cards.js";
-import { Card } from "./Card.js";
-import { FormValidator } from "./FormValidator.js";
+import { initialCards } from "./utils/cards.js";
+import { Card } from "./components/Card.js";
+import { FormValidator } from "./components/FormValidator.js";
+import { Section } from "./components/Section.js";
 
 const popups = document.querySelectorAll(".popup");
 const modalWindowProfile = document.querySelector(
@@ -77,6 +78,18 @@ function createCard(dataCard) {
   const cardElement = card.generateCard();
   return cardElement;
 }
+
+const cardList = new Section(
+  {
+    data: initialCards,
+    renderer: (item) => {
+      const card = new Card(item, "#card-template", openCardPopup);
+      const cardElement = card.generateCard();
+      addItem.renderItems(cardElement);
+    },
+  },
+  cardListSelection
+);
 
 initialCards.forEach((dataCard) => {
   listContainer.append(createCard(dataCard));
