@@ -20,17 +20,13 @@ export class Popup {
   }
 
   setEventListeners() {
-		this._popups = ;
-
-    popups.forEach((popup) => {
-      this._popup.addEventListener("mousedown", (evt) => {
-        if (evt.target.classList.contains("popup_opened")) {
-          close();
-        }
-        if (evt.target.classList.contains("popup__close")) {
-          close();
-        }
-      });
+    this._popup.addEventListener("mousedown", (evt) => {
+      if (evt.target.classList.contains("popup_opened")) {
+        close();
+      }
+      if (evt.target.classList.contains("popup__close")) {
+        close();
+      }
     });
   }
 }
