@@ -9,10 +9,8 @@
 - HTML
 - CSS
 - JS
-- Grid Layot
-- Flexbox
 - методология БЭМ
-- Figma
+- Webpack
 
 ## Ссылка на сайт (GitHub)
 
@@ -20,4 +18,4 @@ https://pavel-sitnikov.github.io/mesto/index.html
 
 ## Будущие дорабоки
 
-- Добавление новых фотографий на сайт
+- Выгрузка проекта на сервер
