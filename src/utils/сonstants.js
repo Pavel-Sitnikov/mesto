@@ -22,6 +22,9 @@ export const jobInput = document.querySelector(
   ".popup__input_enter_description"
 );
 
+export const cardTemplate = "#card-template";
+export const elementsList = ".elements__list";
+
 export const modalWindowProfile = ".popup_action_profile-change";
 export const modalWindowNewPlace = ".popup_action_add-place";
 export const modalWindowCard = ".popup_action_open-card";

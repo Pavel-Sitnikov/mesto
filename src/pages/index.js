@@ -6,6 +6,8 @@ import {
   btnAddCard,
   formEditPopup,
   formAddPopup,
+  cardTemplate,
+  elementsList,
   modalWindowProfile,
   modalWindowNewPlace,
   modalWindowCard,
@@ -36,7 +38,7 @@ const cardsList = new Section(
       cardsList.addItem(cardElement);
     },
   },
-  ".elements__list"
+  elementsList
 );
 
 cardsList.renderItems();
@@ -53,7 +55,6 @@ const popupEditProfile = new PopupWithForm(modalWindowProfile, {
   },
 });
 
-//------------------------доделать: чекнуть whithForm
 const popupNewPlace = new PopupWithForm(modalWindowNewPlace, {
   handleFormSubmit: (data) => {
     const inputs = {
@@ -69,7 +70,7 @@ const popupNewPlace = new PopupWithForm(modalWindowNewPlace, {
 const popupViewCard = new PopupWithImage(modalWindowCard, config);
 
 function createCard(dataCard) {
-  const card = new Card(dataCard, "#card-template", () => {
+  const card = new Card(dataCard, cardTemplate, () => {
     popupViewCard.open(dataCard);
   });
   return card.generateCard();
