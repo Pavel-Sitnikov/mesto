@@ -17,11 +17,13 @@
     <main class="main">
       <section class="profile">
         <div class="profile__content">
-          <img
-            class="profile__avatar"
-            src="<%=require('./images/profile/image.svg')%>"
-            alt="Аватар"
-          />
+          <a class="profile__hover">
+            <img
+              class="profile__avatar"
+              src="<%=require('./images/profile/image.svg')%>"
+              alt="Аватар"
+            />
+          </a>
           <div class="profile__info">
             <div class="profile__place-name">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -129,6 +131,39 @@
         <img class="popup__image" src=" " alt=" " />
         <figcaption class="popup__figcaption"></figcaption>
       </figure>
+    </div>
+    <div class="popup popup_action_delete-card">
+      <div class="popup__container popup__container_delete-card">
+        <button class="popup__close" type="button"></button>
+        <h3 class="popup__title">Вы уверены?</h3>
+        <button type="submit" class="popup__button popup__delete"></button>
+      </div>
+    </div>
+    <div class="popup popup_action_update-avatar">
+      <div class="popup__container">
+        <button class="popup__close" type="button"></button>
+        <h3 class="popup__title">Обновить аватар</h3>
+        <form
+          class="popup__form"
+          id="popup_form_update"
+          name="popup_form_update"
+        >
+          <input
+            class="popup__input popup__input_enter_link"
+            id="avatar-input"
+            placeholder="Ссылка на аватар"
+            type="url"
+            name="link"
+            required
+            value=""
+          />
+          <span
+            class="popup__input-error link-input-error"
+            id="link-input-error"
+          ></span>
+          <button type="submit" class="popup__button popup__update"></button>
+        </form>
+      </div>
     </div>
     <template id="card-template">
       <li class="element">
