@@ -60,10 +60,24 @@ const profileInfo = new UserInfo({
   descriptionSelector,
 });
 
+api
+  .getUserData()
+  .then((userData) => {
+    profileInfo.setUserInfo(userData);
+  })
+  .catch((err) => console.log(err));
+
 const popupEditProfile = new PopupWithForm(modalWindowProfile, {
   handleFormSubmit: (data) => {
-    profileInfo.setUserInfo(data);
-    popupEditProfile.close();
+    api
+      .editProfile(data)
+      .then((res) => {
+        profileInfo.setUserInfo(res);
+        popupEditProfile.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 });
 
@@ -91,7 +105,7 @@ function createCard(dataCard) {
 btnEditingProfile.addEventListener("click", () => {
   const userInfo = profileInfo.getUserInfo();
   nameInput.value = userInfo.name;
-  jobInput.value = userInfo.description;
+  jobInput.value = userInfo.about;
   formEditValidator.resetValidation();
   popupEditProfile.open();
 });
