@@ -107,7 +107,7 @@ const cardsList = new Section(
 api
   .getCards()
   .then((cards) => {
-    cardsList.renderItems(cards);
+    cardsList.renderItems(cards.reverse());
   })
   .catch((err) => {
     console.log(err);
