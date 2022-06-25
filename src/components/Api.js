@@ -1,5 +1,3 @@
-import { data } from "autoprefixer";
-
 export class Api {
   constructor(url) {
     this._url = url;
@@ -52,8 +50,8 @@ export class Api {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
-        name: data.cardName,
-        link: data.cardLink,
+        name: data.title,
+        link: data.link,
       }),
     }).then((res) => {
       if (res.ok) {
@@ -63,8 +61,8 @@ export class Api {
     });
   }
 
-  likesCard() {
-    return fetch(`${this._url}/cards/`, {
+  likesCard(_id) {
+    return fetch(`${this._url}/cards/${_id}/likes`, {
       method: "PUT",
       headers: this._headers,
     }).then((res) => {
@@ -75,8 +73,8 @@ export class Api {
     });
   }
 
-  deleteLike() {
-    return fetch(`${this._url}/cards/`, {
+  removeLike(_id) {
+    return fetch(`${this._url}/cards/${_id}/likes`, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {
@@ -87,8 +85,8 @@ export class Api {
     });
   }
 
-  deleteCard() {
-    return fetch(`${this._url}/cards/`, {
+  deleteCard(_id) {
+    return fetch(`${this._url}/cards/${_id}`, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {
@@ -99,11 +97,13 @@ export class Api {
     });
   }
 
-  editProfileAvatar() {
+  editProfileAvatar(data) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({}),
+      body: JSON.stringify({
+        avatar: data.avatar,
+      }),
     }).then((res) => {
       if (res.ok) {
         return res.json();

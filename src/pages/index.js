@@ -4,19 +4,23 @@ import {
   config,
   btnEditingProfile,
   btnAddCard,
+  btnEditAvatar,
   formEditPopup,
   formAddPopup,
+  formEditAvatarPopup,
   cardTemplate,
   elementsList,
   modalWindowProfile,
   modalWindowNewPlace,
   modalWindowCard,
+  modalWindowDeleteCard,
+  modalWindowEditAvatar,
   nameSelector,
   descriptionSelector,
+  avatarSelector,
   nameInput,
   jobInput,
 } from "../utils/сonstants.js";
-import { initialCards } from "../utils/cards.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { Section } from "../components/Section.js";
@@ -24,8 +28,7 @@ import { PopupWithForm } from "../components/PopupWithForm.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
-
-const api = new Api("https://mesto.nomoreparties.co/v1/cohort-43");
+import { PopupWithConfirm } from "../components/PopupWithConfirm.js";
 
 const formEditValidator = new FormValidator(config, formEditPopup);
 formEditValidator.enableValidation();
@@ -33,9 +36,66 @@ formEditValidator.enableValidation();
 const formAddValidator = new FormValidator(config, formAddPopup);
 formAddValidator.enableValidation();
 
+const formEditAvatarValidator = new FormValidator(config, formEditAvatarPopup);
+formEditAvatarValidator.enableValidation();
+
+let userID = null;
+
+const api = new Api("https://mesto.nomoreparties.co/v1/cohort-43");
+
+api
+  .getUserData()
+  .then((userData) => {
+    userID = userData._id;
+    profileInfo.setUserInfo(userData);
+  })
+  .catch((err) => console.log(err));
+
+const createCard = (data) => {
+  const card = new Card(data, cardTemplate, userID, {
+    handleCardClick: () => {
+      popupViewCard.open(data);
+    },
+    handleRemoveCardClick: (_id) => {
+      popupRemoveCardConfirm.open();
+      popupRemoveCardConfirm.setSubmitAction(() => {
+        api
+          .deleteCard(_id)
+          .then(() => {
+            card.removeCard();
+            popupRemoveCardConfirm.close();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    },
+    handleLikeClick: (data) => {
+      api
+        .likesCard(data._id)
+        .then((res) => {
+          card.handleLikeCard(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    handleRemoveLikeClick: (data) => {
+      api
+        .removeLike(data._id)
+        .then((res) => {
+          card.handleRemoveLikeCard(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  });
+  return card.generateCard();
+};
+
 const cardsList = new Section(
   {
-    items: initialCards,
     renderer: (card) => {
       const cardElement = createCard(card);
       cardsList.addItem(cardElement);
@@ -53,27 +113,41 @@ api
     console.log(err);
   });
 
-// cardsList.renderItems();
-
 const profileInfo = new UserInfo({
   nameSelector,
   descriptionSelector,
+  avatarSelector,
 });
-
-api
-  .getUserData()
-  .then((userData) => {
-    profileInfo.setUserInfo(userData);
-  })
-  .catch((err) => console.log(err));
 
 const popupEditProfile = new PopupWithForm(modalWindowProfile, {
   handleFormSubmit: (data) => {
+    popupEditProfile.loadingDisplay("Сохранение...");
     api
       .editProfile(data)
       .then((res) => {
         profileInfo.setUserInfo(res);
         popupEditProfile.close();
+      })
+      .finally(() => {
+        popupEditProfile.loadingDisplay("Сохранить");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+});
+
+const popupEditAvatar = new PopupWithForm(modalWindowEditAvatar, {
+  handleFormSubmit: (data) => {
+    popupEditAvatar.loadingDisplay("Сохранение...");
+    api
+      .editProfileAvatar(data)
+      .then((res) => {
+        profileInfo.setUserInfo(res);
+        popupEditAvatar.close();
+      })
+      .finally(() => {
+        popupEditAvatar.loadingDisplay("Сохранить");
       })
       .catch((err) => {
         console.log(err);
@@ -83,24 +157,26 @@ const popupEditProfile = new PopupWithForm(modalWindowProfile, {
 
 const popupNewPlace = new PopupWithForm(modalWindowNewPlace, {
   handleFormSubmit: (data) => {
-    const inputs = {
-      name: data.title,
-      link: data.link,
-    };
-    const card = createCard(inputs);
-    cardsList.addItem(card);
-    popupNewPlace.close();
+    popupNewPlace.loadingDisplay("Сохранение...");
+    api
+      .addCard(data)
+      .then((res) => {
+        const card = createCard(res);
+        cardsList.addItem(card);
+        popupNewPlace.close();
+      })
+      .finally(() => {
+        popupNewPlace.loadingDisplay("Создать");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 });
 
 const popupViewCard = new PopupWithImage(modalWindowCard, config);
 
-function createCard(dataCard) {
-  const card = new Card(dataCard, cardTemplate, () => {
-    popupViewCard.open(dataCard);
-  });
-  return card.generateCard();
-}
+const popupRemoveCardConfirm = new PopupWithConfirm(modalWindowDeleteCard);
 
 btnEditingProfile.addEventListener("click", () => {
   const userInfo = profileInfo.getUserInfo();
@@ -115,6 +191,13 @@ btnAddCard.addEventListener("click", () => {
   popupNewPlace.open();
 });
 
+btnEditAvatar.addEventListener("click", () => {
+  formEditAvatarValidator.resetValidation();
+  popupEditAvatar.open();
+});
+
 popupEditProfile.setEventListeners();
 popupNewPlace.setEventListeners();
 popupViewCard.setEventListeners();
+popupEditAvatar.setEventListeners();
+popupRemoveCardConfirm.setEventListeners();
