@@ -43,13 +43,15 @@ let userID = null;
 
 const api = new Api("https://mesto.nomoreparties.co/v1/cohort-43");
 
-api
-  .getUserData()
-  .then((userData) => {
+Promise.all([api.getUserData(), api.getCards()])
+  .then(([userData, cards]) => {
     userID = userData._id;
     profileInfo.setUserInfo(userData);
+    cardsList.renderItems(cards.reverse());
   })
-  .catch((err) => console.log(err));
+  .catch((err) => {
+    console.log(err);
+  });
 
 const createCard = (data) => {
   const card = new Card(data, cardTemplate, userID, {
@@ -104,15 +106,6 @@ const cardsList = new Section(
   elementsList
 );
 
-api
-  .getCards()
-  .then((cards) => {
-    cardsList.renderItems(cards.reverse());
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
 const profileInfo = new UserInfo({
   nameSelector,
   descriptionSelector,
@@ -130,7 +123,7 @@ const popupEditProfile = new PopupWithForm(modalWindowProfile, {
       })
       .finally(() => {
         setTimeout(() => {
-          popupEditProfile.loadingDisplay("Создать");
+          popupEditProfile.loadingDisplay("Сохранить");
         }, 400);
       })
       .catch((err) => {
@@ -150,7 +143,7 @@ const popupEditAvatar = new PopupWithForm(modalWindowEditAvatar, {
       })
       .finally(() => {
         setTimeout(() => {
-          popupEditAvatar.loadingDisplay("Создать");
+          popupEditAvatar.loadingDisplay("Сохранить");
         }, 400);
       })
       .catch((err) => {
