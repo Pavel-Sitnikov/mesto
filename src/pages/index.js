@@ -129,7 +129,9 @@ const popupEditProfile = new PopupWithForm(modalWindowProfile, {
         popupEditProfile.close();
       })
       .finally(() => {
-        popupEditProfile.loadingDisplay("Сохранить");
+        setTimeout(() => {
+          popupEditProfile.loadingDisplay("Создать");
+        }, 400);
       })
       .catch((err) => {
         console.log(err);
@@ -147,7 +149,9 @@ const popupEditAvatar = new PopupWithForm(modalWindowEditAvatar, {
         popupEditAvatar.close();
       })
       .finally(() => {
-        popupEditAvatar.loadingDisplay("Сохранить");
+        setTimeout(() => {
+          popupEditAvatar.loadingDisplay("Создать");
+        }, 400);
       })
       .catch((err) => {
         console.log(err);
@@ -166,7 +170,9 @@ const popupNewPlace = new PopupWithForm(modalWindowNewPlace, {
         popupNewPlace.close();
       })
       .finally(() => {
-        popupNewPlace.loadingDisplay("Создать");
+        setTimeout(() => {
+          popupNewPlace.loadingDisplay("Создать");
+        }, 400);
       })
       .catch((err) => {
         console.log(err);
